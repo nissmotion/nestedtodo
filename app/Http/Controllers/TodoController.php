@@ -14,9 +14,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return Inertia::render('KevinTest', [
-            'todos' => Todo::all(),
-            'user' => Auth::user(),
+        return Inertia::render('Dashboard', [
+            'todos' => Auth::user()->todos,
         ]);
     }
 
@@ -33,7 +32,12 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /** @var \App\User|null $user */
+        $user = Auth::user();
+
+        $user->todos()->create([
+            'description' => $request->description,
+        ]);
     }
 
     /**
