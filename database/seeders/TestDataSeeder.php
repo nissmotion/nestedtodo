@@ -36,13 +36,19 @@ class TestDataSeeder extends Seeder
 
         //generate todos for kevin and caylin
 
-        Todo::factory()->count(10)->for($kevin)->create();
-        Todo::factory()->count(10)->for($caylin)->create();
+        Todo::factory()
+            ->hasNestedTodos(rand(2, 6))->count(4)->for($kevin)->create();
+        Todo::factory()
+            ->hasNestedTodos(rand(2, 6))->count(4)->for($caylin)->create();
 
-        //create 5 additional users and a todo list of 8 items for each, all passwords for these users will be password, but they will be randomly generated email addresses.
+        //create 3 additional users and a todo list of 8 items for each, all passwords for these users will be password, but they will be randomly generated email addresses.
         User::factory()
             ->count(3)
-            ->hasTodos(8)
-            ->create();
+            ->has(
+                Todo::factory()
+                    ->count(rand(4,10))
+                ->hasNestedTodos(rand(2,6))
+            )
+        ->create();
     }
 }
