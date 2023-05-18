@@ -8,8 +8,9 @@ export default function Dashboard({ auth, todos }) {
     const [todoItems, setTodoItems] = useState(todos);
 
     const handleCreateTodo = (description) => {
-        router.post('/todos', { description });
+        const response = router.post('/todos', { description });
 
+        console.log(response);
         // TODO: get a response from the post action that contains the todo object
         // and then add that todo object into the todoItems state
         //
