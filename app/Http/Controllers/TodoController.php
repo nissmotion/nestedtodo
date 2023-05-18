@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTodoRequest;
 use App\Models\Todo;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -30,14 +31,14 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTodoRequest $request)
     {
         /** @var \App\User|null $user */
         $user = Auth::user();
 
-        $user->todos()->create([
-            'description' => $request->description,
-        ]);
+        $todo = $user->todos()->create($request->validated());
+
+        return inertia($todo);
     }
 
     /**
