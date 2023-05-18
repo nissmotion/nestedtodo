@@ -1,31 +1,23 @@
-import TextInput from '@/Components/TextInput';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import TodoCreate from '@/Components/Todos/TodoCreate';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Dashboard({ auth, todos }) {
-    const [values, setValues] = useState({
-        //here is where you set default values
-        // description: "",
-    })
+    const [todoItems, setTodoItems] = useState(todos);
 
-    function handleChange(e) {
-        const key = e.target.id;
-        const value = e.target.value
-        setValues(values => ({
-            ...values,
-            [key]: value,
-        }))
-    }
+    const handleCreateTodo = (description) => {
+        router.post('/todos', { description });
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        router.post('/todos', values)
-
-        values.description = '';
+        // TODO: get a response from the post action that contains the todo object
+        // and then add that todo object into the todoItems state
+        //
+        // const updatedTodoItems = [
+        //     ...todoItems,
+        //     response.data
+        // ];
+        // setTodoItems(updatedTodoItems);
     }
 
     return (
@@ -37,22 +29,7 @@ export default function Dashboard({ auth, todos }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-
-                        <form onSubmit={handleSubmit} className='my-10 px-4'>
-                            <label htmlFor="description">Task Description:</label>
-                            {<input id="description" value={values.description} onChange={handleChange} />}
-                            <button type="submit">Submit</button>
-
-                            {/* <InputLabel htmlFor="description">Task Description</InputLabel>
-
-                            <TextInput
-                                id="description"
-                                value={values.description} onChange={handleChange}
-                                placeholder="What you gonna do?" />
-
-                            <PrimaryButton type="submit" className='ml-4'>Submit</PrimaryButton> */}
-                        </form>
-
+                        <TodoCreate onCreate={handleCreateTodo} />
 
                         <table>
                             <thead>
