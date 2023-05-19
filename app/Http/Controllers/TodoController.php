@@ -38,7 +38,7 @@ class TodoController extends Controller
 
         $todo = $user->todos()->create($request->validated());
 
-        return inertia($todo);
+        return response()->json($todo, 201);
     }
 
     /**

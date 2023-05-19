@@ -1,24 +1,21 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import TodoCreate from '@/Components/Todos/TodoCreate';
+import axios from 'axios';
 import { Head } from '@inertiajs/react';
-import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Dashboard({ auth, todos }) {
     const [todoItems, setTodoItems] = useState(todos);
 
-    const handleCreateTodo = (description) => {
-        const response = router.post('/todos', { description });
+    const handleCreateTodo = async (description) => {
+        const response = await axios.post('/todos', { description });
 
-        console.log(response);
-        // TODO: get a response from the post action that contains the todo object
-        // and then add that todo object into the todoItems state
-        //
-        // const updatedTodoItems = [
-        //     ...todoItems,
-        //     response.data
-        // ];
-        // setTodoItems(updatedTodoItems);
+        const updatedTodoItems = [
+            ...todoItems,
+            response.data
+        ];
+
+        setTodoItems(updatedTodoItems);
     }
 
     return (
@@ -41,7 +38,7 @@ export default function Dashboard({ auth, todos }) {
                             </thead>
 
                             <tbody>
-                                {todos.map((todo, index) => (
+                                {todoItems.map((todo, index) => (
                                     <tr key={index}>
                                         <td>{todo.description}</td>
                                         <td>{todo.complete}</td>
