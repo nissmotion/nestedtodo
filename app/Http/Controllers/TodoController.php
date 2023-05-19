@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
 use App\Models\Todo;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -60,9 +61,14 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTodoRequest $request, string $id)
     {
-        //
+
+        $todo = Todo::findOrFail($id)->update([
+            'complete' => $request->validated(),
+        ]);
+
+        return response()->json($todo, 200);
     }
 
     /**
