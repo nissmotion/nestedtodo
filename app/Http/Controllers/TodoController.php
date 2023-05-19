@@ -67,7 +67,7 @@ class TodoController extends Controller
 
         $todo->update($request->validated());
 
-        return response()->json($todo, 200);
+        return response($todo, 200);
     }
 
     /**
@@ -77,7 +77,7 @@ class TodoController extends Controller
     {
         $doomed = Todo::destroy($id);
 
-        return response()->json([
+        return response([
             'id' => $id,
             'status' => 'deleted',
         ], 200);
