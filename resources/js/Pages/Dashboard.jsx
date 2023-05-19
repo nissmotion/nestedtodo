@@ -30,7 +30,7 @@ export default function Dashboard({ auth, todos }) {
 
         const updatedTodoItems = todoItems.map((todoItem) => {
             if (todoItem.id === id) {
-                return { ...todoItem, complete };
+                return { ...todoItem, complete: response.data.complete };
             }
 
             return todoItem;
