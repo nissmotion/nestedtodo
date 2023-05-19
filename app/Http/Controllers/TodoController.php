@@ -73,6 +73,11 @@ class TodoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $doomed = Todo::destroy($id);
+
+        return response()->json([
+            'id' => $id,
+            'status' => 'deleted',
+        ], 200);
     }
 }
