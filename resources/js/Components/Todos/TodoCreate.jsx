@@ -17,9 +17,9 @@ const TodoCreate = ({ onCreate }) => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="my-10 px-4">
-                <InputLabel htmlFor="description">Task Description</InputLabel>
+        <form onSubmit={handleSubmit} className="mb-10">
+            <InputLabel htmlFor="description">Task Description</InputLabel>
+            <div className="flex">
                 <TextInput
                     id="description"
                     value={description}
@@ -27,8 +27,8 @@ const TodoCreate = ({ onCreate }) => {
                     placeholder="What you gonna do?"
                 />
                 <PrimaryButton type="submit" className="ml-4">Submit</PrimaryButton>
-            </form>
-        </div>
+            </div>
+        </form>
     )
 }
 

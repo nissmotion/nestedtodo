@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import TodoCreate from '@/Components/Todos/TodoCreate';
+import TodoList from '@/Components/Todos/TodoList';
 import axios from 'axios';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
@@ -10,10 +11,28 @@ export default function Dashboard({ auth, todos }) {
     const handleCreateTodo = async (description) => {
         const response = await axios.post('/todos', { description });
 
+        // TODO: check response status code and handle potential errors
+
         const updatedTodoItems = [
             ...todoItems,
             response.data
         ];
+
+        setTodoItems(updatedTodoItems);
+    }
+
+    const toggleTodoCompletionById = (id, isCompleted) => {
+        const complete = Number(!isCompleted);
+        // TODO: make the put request to update the 'complete' value
+        // const response = await axios.put(`/todos/${id}`, { complete })
+
+        const updatedTodoItems = todoItems.map((todoItem) => {
+            if (todoItem.id === id) {
+                return { ...todoItem, complete };
+            }
+
+            return todoItem;
+        })
 
         setTodoItems(updatedTodoItems);
     }
@@ -24,30 +43,10 @@ export default function Dashboard({ auth, todos }) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
             <Head title="Dashboard" />
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <TodoCreate onCreate={handleCreateTodo} />
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Complete</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {todoItems.map((todo, index) => (
-                                    <tr key={index}>
-                                        <td>{todo.description}</td>
-                                        <td>{todo.complete}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-
-                    </div>
+            <div className="max-w-7xl mx-auto mt-12 sm:px-6 lg:px-8">
+                <div className="p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <TodoCreate onCreate={handleCreateTodo} />
+                    <TodoList todoItems={todoItems} onComplete={toggleTodoCompletionById} />
                 </div>
             </div>
         </AuthenticatedLayout>
