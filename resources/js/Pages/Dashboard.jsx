@@ -25,9 +25,6 @@ export default function Dashboard({ auth, todos }) {
         const complete = Number(!isComplete);
         const response = await axios.put(`/todos/${id}`, { complete })
 
-        // TODO: use the response to update the state below,
-        // instead of the 'complete' variable
-
         const updatedTodoItems = todoItems.map((todoItem) => {
             if (todoItem.id === id) {
                 return { ...todoItem, complete: response.data.complete };
