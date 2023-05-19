@@ -2,17 +2,17 @@ import Checkbox from "../Checkbox";
 import InputLabel from "../InputLabel";
 
 const TodoShow = ({ todoItem, onComplete }) => {
-    const handleCompletionClick = () => {
-        const isComplete = todoItem.complete === 1;
-        onComplete(todoItem.id, isComplete);
+    const handleCompletionChange = () => {
+        onComplete(todoItem.id, todoItem.complete);
     }
 
     return (
         <li className="flex items-center mb-1">
             <Checkbox
                 id={`todo-${todoItem.id}`}
+                checked={todoItem.complete}
                 className="mr-2"
-                onClick={handleCompletionClick}
+                onChange={handleCompletionChange}
             />
             <InputLabel
                 htmlFor={`todo-${todoItem.id}`}

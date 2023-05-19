@@ -21,10 +21,12 @@ export default function Dashboard({ auth, todos }) {
         setTodoItems(updatedTodoItems);
     }
 
-    const toggleTodoCompletionById = async (id, isCompleted) => {
-        const complete = Number(!isCompleted);
-        // TODO: make the put request to update the 'complete' value
+    const toggleTodoCompletionById = async (id, isComplete) => {
+        const complete = Number(!isComplete);
         const response = await axios.put(`/todos/${id}`, { complete })
+
+        // TODO: use the response to update the state below,
+        // instead of the 'complete' variable
 
         const updatedTodoItems = todoItems.map((todoItem) => {
             if (todoItem.id === id) {
