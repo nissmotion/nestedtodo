@@ -20,7 +20,10 @@ class Todo extends Model
     * @var array
     */
     protected $fillable = [
-        'user_id', 'description', 'children_complete', 'complete',
+        'user_id',
+        'description',
+        'children_complete',
+        'complete',
     ];
 
     /**
