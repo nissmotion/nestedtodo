@@ -23,7 +23,7 @@ class StoreTodoRequest extends FormRequest
     {
         return [
             'description' => 'required|max:255',
-            'complete'    => 'required',
+            'complete'    => 'required|boolean',
         ];
     }
 }
