@@ -9,7 +9,9 @@ export default function Dashboard({ auth, todos }) {
     const [todoItems, setTodoItems] = useState(todos);
 
     const handleCreateTodo = async (description) => {
-        const response = await axios.post('/todos', { description });
+        const response = await axios.post('/todos',
+            { description, complete: 0 }
+        );
 
         // TODO: check response status code and handle potential errors
 
