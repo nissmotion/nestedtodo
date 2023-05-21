@@ -1,10 +1,18 @@
+import { useState } from "react";
 import Checkbox from "../Checkbox";
 import InputLabel from "../InputLabel";
 import { FaTrashAlt } from 'react-icons/fa';
+import TodoEdit from "./TodoEdit";
 
-const TodoShow = ({ todoItem, onComplete, onDelete }) => {
+const TodoShow = ({ todoItem, onComplete, onDelete, onEdit }) => {
+    const [showEdit, setShowEdit] = useState(false);
+
     const handleCompletionChange = () => {
         onComplete(todoItem.id, todoItem.complete);
+    }
+
+    const handleEditClick = () => {
+        setShowEdit(!showEdit);
     }
 
     const handleDeleteClick = () => {
@@ -12,25 +20,35 @@ const TodoShow = ({ todoItem, onComplete, onDelete }) => {
     }
 
     return (
-        <li className="flex items-center -ml-2 pl-2 py-1 hover:bg-gray-100 group rounded-md">
-            <Checkbox
-                id={`todo-${todoItem.id}`}
-                checked={todoItem.complete}
-                className="mr-4"
-                onChange={handleCompletionChange}
-            />
-            <InputLabel
-                htmlFor={`todo-${todoItem.id}`}
-                className={`todo-text text-lg grow ${todoItem.complete ? "line-through" : ""}`}
-            >
-                <span>{todoItem.description}</span>
-            </InputLabel>
-            <button
-                className="ml-auto mr-2 invisible group-hover:visible"
-                onClick={handleDeleteClick}
-            >
-                <FaTrashAlt />
-            </button>
+        <li className={`flex items-center ${!showEdit ? "-ml-2" : "pr-2"} pl-2 py-1 hover:bg-gray-100 group rounded-md`}>
+
+            {!showEdit ? (
+                <>
+                    <Checkbox
+                        id={`todo-${todoItem.id}`}
+                        checked={todoItem.complete}
+                        className="mr-4 cursor-pointer"
+                        onChange={handleCompletionChange}
+                    />
+                    <InputLabel
+                        htmlFor={`todo-${todoItem.id}`}
+                        className={`cursor-pointer text-lg grow ${todoItem.complete ? "line-through" : ""}`}
+                        onClick={handleEditClick}
+                    >
+                        <span>{todoItem.description}</span>
+                    </InputLabel>
+
+                    <button
+                        className="ml-auto mr-2 invisible group-hover:visible"
+                        onClick={handleDeleteClick}
+                    >
+                        <FaTrashAlt />
+                    </button>
+                </>
+            ) : (
+                <TodoEdit todoItem={todoItem} onEdit={onEdit} setShowEdit={setShowEdit} />
+            )}
+
         </li>
     )
 }

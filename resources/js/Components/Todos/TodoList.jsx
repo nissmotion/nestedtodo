@@ -1,6 +1,6 @@
 import TodoShow from "./TodoShow";
 
-const TodoList = ({ todoItems, onComplete, onDelete }) => {
+const TodoList = ({ todoItems, onComplete, onDelete, onEdit }) => {
     const renderedTodoItems = todoItems.map((todoItem) => {
         return (
             <TodoShow
@@ -8,6 +8,7 @@ const TodoList = ({ todoItems, onComplete, onDelete }) => {
                 todoItem={todoItem}
                 onComplete={onComplete}
                 onDelete={onDelete}
+                onEdit={onEdit}
             />
         );
     })
