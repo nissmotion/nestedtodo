@@ -17,10 +17,11 @@ const TodoCreate = ({ onCreate }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="mb-10">
+        <form onSubmit={handleSubmit} className="mb-2 w-full">
             <InputLabel htmlFor="description" className="text-sm">Task Description</InputLabel>
             <div className="flex">
                 <TextInput
+                    className="grow"
                     id="description"
                     value={description}
                     onChange={handleChange}

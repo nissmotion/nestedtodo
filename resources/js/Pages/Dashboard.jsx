@@ -38,6 +38,16 @@ export default function Dashboard({ auth, todos }) {
         setTodoItems(updatedTodoItems);
     }
 
+    const deleteTodoItemById = async (id) => {
+        await axios.delete(`/todos/${id}`);
+
+        const updatedTodoItems = todoItems.filter((todoItem) => {
+            return todoItem.id !== id;
+        })
+
+        setTodoItems(updatedTodoItems);
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -45,9 +55,13 @@ export default function Dashboard({ auth, todos }) {
         >
             <Head title="Dashboard" />
             <div className="max-w-7xl mx-auto mt-12 sm:px-6 lg:px-8">
-                <div className="p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div className="w-1/2 mx-auto p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <TodoCreate onCreate={handleCreateTodo} />
-                    <TodoList todoItems={todoItems} onComplete={toggleTodoCompletionById} />
+                    <TodoList
+                        todoItems={todoItems}
+                        onComplete={toggleTodoCompletionById}
+                        onDelete={deleteTodoItemById}
+                    />
                 </div>
             </div>
         </AuthenticatedLayout>
