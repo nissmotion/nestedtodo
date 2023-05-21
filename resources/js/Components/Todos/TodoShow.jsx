@@ -46,7 +46,12 @@ const TodoShow = ({ todoItem, onComplete, onDelete, onEdit }) => {
                     </button>
                 </>
             ) : (
-                <TodoEdit todoItem={todoItem} onEdit={onEdit} setShowEdit={setShowEdit} />
+                <TodoEdit
+                    todoItem={todoItem}
+                    onEdit={onEdit}
+                    showEdit={showEdit}
+                    setShowEdit={setShowEdit}
+                />
             )}
 
         </li>
