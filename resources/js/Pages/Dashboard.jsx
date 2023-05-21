@@ -34,7 +34,7 @@ export default function Dashboard({ auth, todos }) {
 
             return todoItem;
         })
-
+        console.log(response.data);
         setTodoItems(updatedTodoItems);
     }
 
@@ -48,6 +48,20 @@ export default function Dashboard({ auth, todos }) {
         setTodoItems(updatedTodoItems);
     }
 
+    const editTodoItemById = async (id, description) => {
+        const response = await axios.put(`/todos/${id}`, { description });
+
+        const updatedTodoItems = todoItems.map((todoItem) => {
+            if (todoItem.id === id) {
+                return { ...todoItem, description: response.data.description }
+            }
+
+            return todoItem;
+        })
+
+        setTodoItems(updatedTodoItems);
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -55,12 +69,13 @@ export default function Dashboard({ auth, todos }) {
         >
             <Head title="Dashboard" />
             <div className="max-w-7xl mx-auto mt-12 sm:px-6 lg:px-8">
-                <div className="w-1/2 mx-auto p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div className="w-2/3 mx-auto p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <TodoCreate onCreate={handleCreateTodo} />
                     <TodoList
                         todoItems={todoItems}
                         onComplete={toggleTodoCompletionById}
                         onDelete={deleteTodoItemById}
+                        onEdit={editTodoItemById}
                     />
                 </div>
             </div>

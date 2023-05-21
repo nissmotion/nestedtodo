@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class UpdateTodoRequest extends FormRequest
 {
@@ -19,10 +21,21 @@ class UpdateTodoRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
-        return [
-            'complete' => 'required',
-        ];
+        if (isset($request->complete)) {
+            return [
+                'complete' => 'required|boolean',
+            ];
+        }
+        if (isset($request->description)) {
+            return [
+                'description' => 'required|string|max:255',
+            ];
+        }
+        throw ValidationException::withMessages([
+            'message'   => 'Incorrect Data.',
+            'data'      => $request->all()
+        ]);
     }
 }
