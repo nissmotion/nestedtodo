@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { FaTrashAlt } from 'react-icons/fa';
 import Checkbox from "../Checkbox";
 import InputLabel from "../InputLabel";
-import { FaTrashAlt } from 'react-icons/fa';
 import TodoEdit from "./TodoEdit";
 
 const TodoShow = ({ todoItem, onComplete, onDelete, onEdit }) => {

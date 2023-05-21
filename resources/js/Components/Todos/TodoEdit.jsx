@@ -30,7 +30,7 @@ const TodoEdit = ({ todoItem, onEdit, setShowEdit }) => {
             />
             <div>
                 <PrimaryButton className="mr-2">Fix It</PrimaryButton>
-                <SecondaryButton onClick={handleCancel}>Nvm lol</SecondaryButton>
+                <SecondaryButton onClick={handleCancel}>Cancel</SecondaryButton>
             </div>
         </form>
     )

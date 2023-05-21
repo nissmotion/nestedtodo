@@ -34,7 +34,7 @@ export default function Dashboard({ auth, todos }) {
 
             return todoItem;
         })
-        console.log(response.data);
+
         setTodoItems(updatedTodoItems);
     }
 
