@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTodoRequest;
-use App\Http\Requests\UpdateTodoRequest;
 use App\Models\Todo;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 class TodoController extends Controller
 {
@@ -64,11 +64,12 @@ class TodoController extends Controller
     public function update(UpdateTodoRequest $request, string $id)
     {
         $todo = Todo::select('id')->where('id', $id)
-            ->when(isset($request->complete), function ($q) {
-                $q->addSelect('complete');
-            }, function ($q) {
-                $q->addSelect('description');
-            })->firstOrFail();
+            ->when(isset($request->complete), function (Builder $query) {
+                $query->addSelect('complete');
+            }, function (Builder $query) {
+                $query->addSelect('description');
+            })
+        ->firstOrFail();
 
         $todo->update($request->validated());
 
