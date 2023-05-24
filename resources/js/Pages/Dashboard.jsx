@@ -12,7 +12,7 @@ export default function Dashboard({ auth }) {
             <Head title="Dashboard" />
             <div className="max-w-7xl mx-auto mt-12 sm:px-6 lg:px-8">
                 <div className="w-2/3 mx-auto p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <TodoCreate onCreate={handleCreateTodo} />
+                    <TodoCreate />
                     <TodoList
                         todoItems={todoItems}
                         onComplete={toggleTodoCompletionById}
