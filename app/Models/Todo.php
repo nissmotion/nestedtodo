@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\NestedTodo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,5 +45,13 @@ class Todo extends Model
     public function nestedTodos(): HasMany
     {
         return $this->hasMany(NestedTodo::class);
+    }
+
+    /**
+     * Scope a query to only include complete todos.
+     */
+    public function scopeComplete(Builder $query): void
+    {
+        $query->where('complete', 1);
     }
 }
