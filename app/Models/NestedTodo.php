@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NestedTodo extends Model
 {
@@ -28,5 +29,13 @@ class NestedTodo extends Model
     public function todo(): BelongsTo
     {
         return $this->belongsTo(Todo::class);
+    }
+
+     /**
+     * Scope a query to only include complete nestedTodos.
+     */
+    public function scopeComplete(Builder $query): void
+    {
+        $query->where('complete', 1);
     }
 }
