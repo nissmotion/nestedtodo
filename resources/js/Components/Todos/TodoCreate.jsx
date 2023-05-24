@@ -2,9 +2,11 @@ import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useState } from "react";
+import useTodosContext from '@/Hooks/use-todos-context';
 
-const TodoCreate = ({ onCreate }) => {
+const TodoCreate = () => {
     const [description, setDescription] = useState('');
+    const { createTodo } = useTodosContext();
 
     const handleChange = (e) => {
         setDescription(e.target.value);
@@ -12,7 +14,7 @@ const TodoCreate = ({ onCreate }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onCreate(description);
+        createTodo(description);
         setDescription('');
     }
 
