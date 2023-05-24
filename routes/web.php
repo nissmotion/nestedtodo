@@ -5,8 +5,9 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NestedTodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('todos', TodoController::class);
+    Route::resource('nested-todos', NestedTodoController::class);
 
 
 
