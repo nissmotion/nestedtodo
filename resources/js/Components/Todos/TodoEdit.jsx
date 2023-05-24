@@ -2,9 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import TextInput from "../TextInput";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
+import useTodosContext from "@/Hooks/use-todos-context";
 
-const TodoEdit = ({ todoItem, onEdit, showEdit, setShowEdit }) => {
-    const [description, setDescription] = useState(todoItem.description);
+const TodoEdit = ({ todo, onEdit, showEdit }) => {
+    const [description, setDescription] = useState(todo.description);
+    const { editTodoById } = useTodosContext();
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -14,19 +16,19 @@ const TodoEdit = ({ todoItem, onEdit, showEdit, setShowEdit }) => {
         }
     }, [showEdit])
 
-    const handleChange = (event) => {
-        setDescription(event.target.value);
+    const handleChange = (e) => {
+        setDescription(e.target.value);
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-        onEdit(todoItem.id, description);
-        setShowEdit(false);
+        onEdit();
+        editTodoById(todo.id, description);
     }
 
     const handleCancel = () => {
-        setShowEdit(false);
+        onEdit();
     }
 
     return (

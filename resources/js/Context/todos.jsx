@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const TodosContext = createContext();
 
-const Provider = ({ children, initialTodos }) => {
-    const [todoItems, setTodoItems] = useState(initialTodos);
+const TodosProvider = ({ children, initialTodos }) => {
+    const [todos, setTodos] = useState(initialTodos);
 
     const createTodo = async (description) => {
         const response = await axios.post('/todos',
@@ -13,51 +13,51 @@ const Provider = ({ children, initialTodos }) => {
 
         // TODO: check response status code and handle potential errors
 
-        const updatedTodoItems = [
-            ...todoItems,
+        const updatedTodos = [
+            ...todos,
             response.data
         ];
 
-        setTodoItems(updatedTodoItems);
+        setTodos(updatedTodos);
     }
 
     const toggleTodoCompletionById = async (id, isComplete) => {
         const complete = Number(!isComplete);
         const response = await axios.put(`/todos/${id}`, { complete })
 
-        const updatedTodoItems = todoItems.map((todoItem) => {
-            if (todoItem.id === id) {
-                return { ...todoItem, complete: response.data.complete };
+        const updatedTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                return { ...todo, complete: response.data.complete };
             }
 
-            return todoItem;
+            return todo;
         })
 
-        setTodoItems(updatedTodoItems);
+        setTodos(updatedTodos);
     }
 
-    const deleteTodoItemById = async (id) => {
+    const deleteTodoById = async (id) => {
         await axios.delete(`/todos/${id}`);
 
-        const updatedTodoItems = todoItems.filter((todoItem) => {
-            return todoItem.id !== id;
+        const updatedTodos = todos.filter((todo) => {
+            return todo.id !== id;
         })
 
-        setTodoItems(updatedTodoItems);
+        setTodos(updatedTodos);
     }
 
-    const editTodoItemById = async (id, description) => {
+    const editTodoById = async (id, description) => {
         const response = await axios.put(`/todos/${id}`, { description });
 
-        const updatedTodoItems = todoItems.map((todoItem) => {
-            if (todoItem.id === id) {
-                return { ...todoItem, description: response.data.description }
+        const updatedTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                return { ...todo, description: response.data.description }
             }
 
-            return todoItem;
+            return todo;
         })
 
-        setTodoItems(updatedTodoItems);
+        setTodos(updatedTodos);
     }
 
     return (
@@ -65,13 +65,13 @@ const Provider = ({ children, initialTodos }) => {
             todos,
             createTodo,
             toggleTodoCompletionById,
-            deleteTodoItemById,
-            editTodoItemById
+            deleteTodoById,
+            editTodoById
         }}>
             {children}
         </TodosContext.Provider>
     )
 }
 
-export { Provider };
+export { TodosProvider };
 export default TodosContext;

@@ -3,12 +3,14 @@ import { FaTrashAlt } from 'react-icons/fa';
 import Checkbox from "../Checkbox";
 import InputLabel from "../InputLabel";
 import TodoEdit from "./TodoEdit";
+import useTodosContext from "@/Hooks/use-todos-context";
 
-const TodoShow = ({ todoItem, onComplete, onDelete, onEdit }) => {
+const TodoShow = ({ todo }) => {
     const [showEdit, setShowEdit] = useState(false);
+    const { toggleTodoCompletionById, deleteTodoById } = useTodosContext();
 
     const handleCompletionChange = () => {
-        onComplete(todoItem.id, todoItem.complete);
+        toggleTodoCompletionById(todo.id, todo.complete);
     }
 
     const handleEditClick = () => {
@@ -16,7 +18,7 @@ const TodoShow = ({ todoItem, onComplete, onDelete, onEdit }) => {
     }
 
     const handleDeleteClick = () => {
-        onDelete(todoItem.id);
+        deleteTodoById(todo.id);
     }
 
     return (
@@ -25,17 +27,17 @@ const TodoShow = ({ todoItem, onComplete, onDelete, onEdit }) => {
             {!showEdit ? (
                 <>
                     <Checkbox
-                        id={`todo-${todoItem.id}`}
-                        checked={todoItem.complete}
+                        id={`todo-${todo.id}`}
+                        checked={todo.complete}
                         className="mr-4 cursor-pointer"
                         onChange={handleCompletionChange}
                     />
                     <InputLabel
-                        htmlFor={`todo-${todoItem.id}`}
-                        className={`cursor-pointer text-lg grow ${todoItem.complete ? "line-through" : ""}`}
+                        htmlFor={`todo-${todo.id}`}
+                        className={`cursor-pointer text-lg grow ${todo.complete ? "line-through" : ""}`}
                         onClick={handleEditClick}
                     >
-                        <span>{todoItem.description}</span>
+                        <span>{todo.description}</span>
                     </InputLabel>
 
                     <button
@@ -47,10 +49,9 @@ const TodoShow = ({ todoItem, onComplete, onDelete, onEdit }) => {
                 </>
             ) : (
                 <TodoEdit
-                    todoItem={todoItem}
-                    onEdit={onEdit}
+                    todo={todo}
+                    onEdit={handleEditClick}
                     showEdit={showEdit}
-                    setShowEdit={setShowEdit}
                 />
             )}
 
