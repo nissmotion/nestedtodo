@@ -17,16 +17,8 @@ class TodoController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard', [
-            'todos' => Auth::user()->todos,
+            'todos' => Todo::where('user_id', Auth::id())->with('nestedTodos')->get(),
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -40,22 +32,6 @@ class TodoController extends Controller
         $todo = $user->todos()->create($request->validated());
 
         return response($todo, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
