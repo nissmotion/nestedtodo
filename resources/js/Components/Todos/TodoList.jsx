@@ -1,19 +1,16 @@
 import TodoShow from "./TodoShow";
+import useTodosContext from "@/Hooks/use-todos-context";
 
-const TodoList = ({ todoItems, onComplete, onDelete, onEdit }) => {
-    const renderedTodoItems = todoItems.map((todoItem) => {
+const TodoList = () => {
+    const { todos } = useTodosContext();
+
+    const renderedTodos = todos.map((todo) => {
         return (
-            <TodoShow
-                key={todoItem.id}
-                todoItem={todoItem}
-                onComplete={onComplete}
-                onDelete={onDelete}
-                onEdit={onEdit}
-            />
+            <TodoShow key={todo.id} todo={todo} />
         );
     })
 
-    return <ul className="mt-6">{renderedTodoItems}</ul>;
+    return <ul className="mt-6">{renderedTodos}</ul>;
 }
 
 export default TodoList;
